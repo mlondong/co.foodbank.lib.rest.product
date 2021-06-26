@@ -2,6 +2,8 @@ package co.com.foodbank.product.v1.controller;
 
 import java.util.Collection;
 import javax.validation.Valid;
+import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotNull;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import co.com.foodbank.product.dto.IProduct;
@@ -65,6 +67,17 @@ public class ProductController {
     public IProduct findById(@Valid String _id)
             throws ProductNotFoundException {
         return service.findById(_id);
+    }
+
+    /**
+     * Method to find by name of product.
+     * 
+     * @param _name
+     * @return {@code Collection<IProduct>}
+     */
+    public Collection<IProduct> findByName(@NotNull @NotBlank String _name)
+            throws ProductNotFoundException {
+        return service.findByName(_name);
     }
 
 }

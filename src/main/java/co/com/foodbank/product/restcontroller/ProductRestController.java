@@ -111,6 +111,33 @@ public class ProductRestController {
 
 
     /**
+     * Method to find products by name.
+     * 
+     * @return {@code ResponseEntity<Collection<IProduct>>}
+     */
+    @Operation(summary = "Search products by Name.")
+    @ApiResponses(
+            value = {
+                    @ApiResponse(responseCode = "200",
+                            description = "Found the product",
+                            content = {
+                                    @Content(mediaType = "application/json")}),
+                    @ApiResponse(responseCode = "500",
+                            description = "Service not available.",
+                            content = @Content),
+                    @ApiResponse(responseCode = "400",
+                            description = "Bad request.", content = @Content)})
+    @GetMapping(value = "/searchByName/{name}")
+    public ResponseEntity<Collection<IProduct>> searchByName(
+            @PathVariable("name") @NotNull @NotBlank String _name)
+            throws ProductNotFoundException {
+        return ResponseEntity.status(HttpStatus.OK)
+                .body(controller.findByName(_name));
+    }
+
+
+
+    /**
      * Method to find all products.
      * 
      * @return {@code ResponseEntity<Collection<IProduct>>}

@@ -79,12 +79,99 @@ public class ProductService {
      */
     public IProduct update(@Valid ProductDTO dto, String _id)
             throws ProductNotFoundException {
+
         Product dataDB = this.findById(_id);
-        dataDB = modelMapper.map(dto, Product.class);
-        dataDB.setId(_id);
-        return repository.save(dataDB);
+        Product productUpdated = checkInstansOf(dataDB, dto);
+        return repository.save(productUpdated);
     }
 
+
+
+    /**
+     * Check type of object.
+     * 
+     * @param dataDB
+     * @param dto
+     * @return {@code Product}
+     */
+    private Product checkInstansOf(Product dataDB, ProductDTO dto) {
+
+        Product product = null;
+        if (dataDB instanceof Perishable) {
+            Perishable perishable = fillPerishable(dataDB, dto);
+            product = perishable;
+        } else if (dataDB instanceof NoNPerishable) {
+            NoNPerishable noNPerishable = fillNoNPerisable(dataDB, dto);
+            product = noNPerishable;
+        } else if (dataDB instanceof SemiPerishable) {
+            SemiPerishable semiPerishable = fillSemiPerisable(dataDB, dto);
+            product = semiPerishable;
+        }
+        return product;
+    }
+
+
+    /**
+     * Fill SemiPerishable.
+     * 
+     * @param dataDB
+     * @param dto
+     * @return {@code SemiPerishable}
+     */
+    private SemiPerishable fillSemiPerisable(Product dataDB, ProductDTO dto) {
+        SemiPerishable semiPerishable =
+                (SemiPerishable) fillProduct(dataDB, dto);
+        semiPerishable.setRequiredRefrigeration(dto.isRequiredRefrigeration());
+        return semiPerishable;
+    }
+
+
+    /**
+     * Fill Product.
+     * 
+     * @param dataDB
+     * @param dto
+     * @return {@code Product}
+     */
+    private Product fillProduct(Product dataDB, ProductDTO dto) {
+        Product prod = dataDB;
+        prod.setName(dto.getName());
+        prod.setBrand(dto.getBrand());
+        prod.setDateExpiraton(dto.getDateExpiraton());
+        prod.setDescription(dto.getDescription());
+        prod.setId(dataDB.getId());
+        return prod;
+    }
+
+
+    /**
+     * Fill NoNPerishable.
+     * 
+     * @param dataDB
+     * @param dto
+     * @return {@code NoNPerishable}
+     */
+    private NoNPerishable fillNoNPerisable(Product dataDB, ProductDTO dto) {
+        NoNPerishable noNPerishable = (NoNPerishable) fillProduct(dataDB, dto);
+        return noNPerishable;
+    }
+
+
+    /**
+     * Fill Perishable.
+     * 
+     * @param dataDB
+     * @param dto
+     * @return {@code Perishable}
+     */
+    private Perishable fillPerishable(Product dataDB, ProductDTO dto) {
+        Perishable perishable = (Perishable) fillProduct(dataDB, dto);
+        perishable.setExpectedStorageLife(
+                Long.valueOf(dto.getExpectedStorageLife()));
+        perishable.setStorageTemperature(
+                Long.valueOf(dto.getStorageTemperature()));
+        return perishable;
+    }
 
 
     /**
@@ -109,6 +196,18 @@ public class ProductService {
         return repository.findAll().stream()
                 .map(d -> modelMapper.map(d, IProduct.class))
                 .collect(Collectors.toList());
+    }
+
+
+    /**
+     * Method to find by name products.
+     * 
+     * @param _name
+     * @return {@code Collection<IProduct>}
+     */
+    public Collection<IProduct> findByName(String _name)
+            throws ProductNotFoundException {
+        return repository.findByName(_name);
     }
 
 
