@@ -3,7 +3,7 @@ package co.com.foodbank.product.v1.model;
 import java.util.Date;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
-import co.com.foodbank.product.dto.IProduct;
+import co.com.foodbank.product.dto.interfaces.IProduct;
 
 /**
  * @author mauricio.londono@gmail.com co.com.foodbank.product.v1.model

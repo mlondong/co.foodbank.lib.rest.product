@@ -4,7 +4,7 @@ import java.util.Collection;
 import org.springframework.data.mongodb.repository.MongoRepository;
 import org.springframework.data.mongodb.repository.Query;
 import org.springframework.stereotype.Repository;
-import co.com.foodbank.product.dto.IProduct;
+import co.com.foodbank.product.dto.interfaces.IProduct;
 import co.com.foodbank.product.exception.ProductNotFoundException;
 import co.com.foodbank.product.v1.model.Product;
 

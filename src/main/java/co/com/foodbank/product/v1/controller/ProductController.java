@@ -6,8 +6,8 @@ import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
-import co.com.foodbank.product.dto.IProduct;
 import co.com.foodbank.product.dto.ProductDTO;
+import co.com.foodbank.product.dto.interfaces.IProduct;
 import co.com.foodbank.product.exception.ProductNotFoundException;
 import co.com.foodbank.product.service.ProductService;
 
