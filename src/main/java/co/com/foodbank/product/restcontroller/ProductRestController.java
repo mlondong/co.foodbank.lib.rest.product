@@ -52,7 +52,9 @@ public class ProductRestController {
      * @param dto
      * @return {@code ResponseEntity<IProduct>}
      */
-    @Operation(summary = "Add a new Product", description = "",
+    @Operation(
+            summary = "Add a new Product options:  NonPerishable, SemiPerishable, Perishable",
+            description = "  NonPerishable, SemiPerishable, Perishable",
             tags = {"product"})
     @ApiResponses(
             value = {
