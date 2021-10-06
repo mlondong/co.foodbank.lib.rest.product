@@ -181,8 +181,8 @@ public class ProductService {
      * @return {@code IProduct }
      */
     public Product findById(String id) throws ProductNotFoundException {
-        return repository.findById(id)
-                .orElseThrow(() -> new ProductNotFoundException(id));
+        return repository.findById(id).orElseThrow(
+                () -> new ProductNotFoundException("Product Id " + id));
     }
 
 
