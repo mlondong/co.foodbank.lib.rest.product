@@ -20,6 +20,7 @@ public class Product implements IProduct {
     private String brand;
 
 
+
     /**
      * Default constructor.
      */
